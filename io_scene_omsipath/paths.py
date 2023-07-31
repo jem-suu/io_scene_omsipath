@@ -1,10 +1,12 @@
 import re
+from bpy import path, data
+from time import strftime
 
-def path_import(filepath):
-    obj_name = bpy.path.display_name(self.filepath)
+def path_import(filepath, context):
+    obj_name = bpy.path.display_name(filepath)
 
     # Read path data:
-    with open(self.filepath, "r") as file:
+    with open(filepath, "r") as file:
         path_data = file.read()
         
         # Read pathpoints:
@@ -36,7 +38,7 @@ def path_import(filepath):
 
     # Create mesh with given data:
     if len(pathpnts):
-        mesh = bpy.data.meshes.new(obj_name)
+        mesh = data.meshes.new(obj_name)
         mesh.from_pydata(pathpnts, pathlinks, [])
     
         """
@@ -51,7 +53,7 @@ def path_import(filepath):
         mesh.update()
         """
 
-        obj = bpy.data.objects.new(obj_name, mesh)
+        obj = data.objects.new(obj_name, mesh)
 
         scn = context.scene
         scn.collection.objects.link(obj)
