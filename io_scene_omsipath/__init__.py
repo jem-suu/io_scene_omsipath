@@ -1,7 +1,6 @@
 import bpy
-from bpy.props import StringProperty, BoolProperty
+from bpy.props import StringProperty
 from bpy_extras.io_utils import ImportHelper, ExportHelper
-from bpy_extras.object_utils import AddObjectHelper
 
 from . import paths, passengercabin
 
@@ -25,7 +24,7 @@ class ImportPaths(bpy.types.Operator, ImportHelper):
     bl_idname = "import_scene.paths"
     bl_label = "Import Path Config"
 
-    filepath = StringProperty(subtype='FILE_PATH')
+    # filepath = StringProperty(subtype='FILE_PATH')
     
     def execute(self, context):
         paths.path_import(self.filepath, context)
@@ -35,6 +34,9 @@ def menu_func_importpaths(self, context):
     self.layout.operator(ImportPaths.bl_idname, text="OMSI Path Config (.cfg)")
 
 # Path Export
+
+def menu_func_exportpaths(self, context):
+    self.layout.operator(ExportPaths.bl_idname, text="OMSI Path Config (.cfg)")
 
 # PassengerCabin Export
 

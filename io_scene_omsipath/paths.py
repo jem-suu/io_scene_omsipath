@@ -1,5 +1,5 @@
 import re
-from bpy import path, data
+import bpy
 from time import strftime
 
 def path_import(filepath, context):
@@ -38,7 +38,7 @@ def path_import(filepath, context):
 
     # Create mesh with given data:
     if len(pathpnts):
-        mesh = data.meshes.new(obj_name)
+        mesh = bpy.data.meshes.new(obj_name)
         mesh.from_pydata(pathpnts, pathlinks, [])
     
         """
@@ -53,7 +53,7 @@ def path_import(filepath, context):
         mesh.update()
         """
 
-        obj = data.objects.new(obj_name, mesh)
+        obj = bpy.data.objects.new(obj_name, mesh)
 
         scn = context.scene
         scn.collection.objects.link(obj)
