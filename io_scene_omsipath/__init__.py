@@ -35,6 +35,22 @@ def menu_func_importpaths(self, context):
 
 # Path Export
 
+class ExportPaths(bpy.types.Operator, ExportHelper):
+    bl_idname = "export_scene.paths"
+    bl_label = "Export OMSI Path config"
+
+    filename_ext = ".cfg"
+
+    # filepath = StringProperty(subtype='FILE_PATH')
+
+    def execute(self, context):
+        errors = ""
+        errors += paths.path_export(self.filepath, context)
+
+        if len(errors):
+            raise Exception(errors)
+        return {'FINISHED'}
+
 def menu_func_exportpaths(self, context):
     self.layout.operator(ExportPaths.bl_idname, text="OMSI Path Config (.cfg)")
 
@@ -44,11 +60,15 @@ def menu_func_exportpaths(self, context):
 
 def register():
     bpy.utils.register_class(ImportPaths)
+    bpy.utils.register_class(ExportPaths)
     bpy.types.TOPBAR_MT_file_import.append(menu_func_importpaths)
+    bpy.types.TOPBAR_MT_file_export.append(menu_func_exportpaths)
 
 def unregister():
     bpy.utils.unregister_class(ImportPaths)
+    bpy.utils.unregister_class(ExportPaths)
     bpy.types.TOPBAR_MT_file_import.remove(menu_func_importpaths)
+    bpy.types.TOPBAR_MT_file_export.remove(menu_func_exportpaths)
 
 if __name__ == "__main__":
     register()

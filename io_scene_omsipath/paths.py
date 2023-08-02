@@ -62,3 +62,44 @@ def path_import(filepath, context):
         return ""
     else:
         return "\nError: The chosen file does not contain any pathpoints\n-> Solution: Choose a correct path file."
+
+def path_export(filepath, context):
+    errors = ""
+
+    # Get path object (=selected object):
+    try:
+        path = context.selected_objects[0]
+    except IndexError:
+        try:
+            path = context.scene.objects["Paths"]
+        except KeyError:
+            return "\nError: No object with name \"Paths\" was found\n-> Solution: Rename the paths object."
+
+    with open(filepath, "w") as file:
+        # Timestamp in first line:
+        file.write("This file was created with OMSI Configuration File Exporter for Blender (%s)\n" % strftime("%Y-%m-%d %H:%M:%S"))
+
+        # Pathpoints:
+        file.write("\n---------------------------\nPathpoints:\n")
+        if len(path.data.vertices):
+            for v in path.data.vertices:
+                file.write("\n%d\n[pathpnt]\n%.3f\n%.3f\n%.3f\n" % (v.index, v.co.x, v.co.y, v.co.z))
+
+            # Pathlinks:
+            file.write("\n---------------------------\nPathlinks:\n")
+            if len(path.data.edges):
+                last_height = 0
+                for e in sorted(path.data.edges, key=lambda x: x.vertices[0]):
+                    if e.bevel_weight != last_height and e.bevel_weight > 0:
+                        last_height = e.bevel_weight
+                        file.write("\n[next_roomheight]\n%.2f\n" % (last_height*10))
+                    if e.crease:
+                        file.write("\n[pathlink_oneway]\n%d\n%d\n" % tuple(e.vertices))
+                    else:
+                        file.write("\n[pathlink]\n%d\n%d\n" % tuple(e.vertices))
+            else:
+                errors += "\nError: The selected object has no edges\n-> Solution: Add edges."
+        else:
+            errors += "\nError: The selected object has no vertices\n-> Solution: Add vertices."
+
+        return errors
