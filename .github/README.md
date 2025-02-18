@@ -1,4 +1,4 @@
-# OMSI Pax Configuration Exporter 
+# OMSI Configuration Exporter 
 
 This add-on for Blender is effectively a port of part of the original add-on created for Blender versions 2.68-2.79b by [Fabian S. (faaabiii)](https://forum.omnibussimulator.de/forum/index.php?thread/29488-blender-addon-omsi-konfigurationsdateien-exporter-v1-2-neu-passengercabinexporte/) and originally uploaded to the official OMSI forum. 
 
@@ -18,3 +18,11 @@ This add-on for Blender is effectively a port of part of the original add-on cre
   - Allows for driver seat definition, through the use of ~~sharp~~ crease marking on the driver's position 
   - Allows the randomisation of rotation of standee locations if only a single vertex is defined as a passenger point
   - ~~Allows the definition of money points, change points and stamper and ticketprinter locations~~
+
+## Releases
+
+Releases can be found in the [releases](https://github.com/jem-suu/io_scene_omsipath/releases) tab, or on the sidebar on the right hand side
+ 
+## License
+
+This blender plugin is released under the GPLv2 license, as per the original plugin.
