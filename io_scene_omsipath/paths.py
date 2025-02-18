@@ -89,9 +89,9 @@ def path_export(filepath, context):
         path = context.selected_objects[0]
     except IndexError:
         try:
-            path = context.scene.objects["Paths"]
+            path = context.scene.objects["Path"]
         except KeyError:
-            return "\nError: No object with name \"Paths\" was found\n-> Solution: Rename the paths object."
+            return "\nError: No object with name \"Path\" was found\n-> Solution: Rename the paths object."
 
     with open(filepath, "w") as file:
         # Timestamp in first line:
