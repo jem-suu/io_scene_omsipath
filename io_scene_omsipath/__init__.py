@@ -73,19 +73,42 @@ def menu_func_exportPaths(self, context):
 
 # PassengerCabin Export
 
+class ExportPassengerCabin(bpy.types.Operator, ExportHelper):
+    bl_idname = "export_scene.passengercabin"
+    bl_label = "Export OMSI PassengerCabin config"
+
+    filename_ext = ".cfg"
+
+    # filepath = StringProperty(subtype='FILE_PATH')
+
+    def execute(self, context):
+        errors = ""
+        errors += passengercabin.export(self.filepath, context)
+
+        if len(errors):
+            raise Exception(errors)
+        return {'FINISHED'}
+
+def menu_func_exportPassengerCabin(self, context):
+    self.layout.operator(ExportPassengerCabin.bl_idname, text="OMSI PassengerCabin config (.cfg)")
+
 # Register/Unregister plugin
 
 def register():
     bpy.utils.register_class(ImportPaths)
     bpy.utils.register_class(ExportPaths)
+    bpy.utils.register_class(ExportPassengerCabin)
     bpy.types.TOPBAR_MT_file_import.append(menu_func_importPaths)
     bpy.types.TOPBAR_MT_file_export.append(menu_func_exportPaths)
+    bpy.types.TOPBAR_MT_file_export.append(menu_func_exportPassengerCabin)
 
 def unregister():
     bpy.utils.unregister_class(ImportPaths)
     bpy.utils.unregister_class(ExportPaths)
+    bpy.utils.unregister_class(ExportPassengerCabin)
     bpy.types.TOPBAR_MT_file_import.remove(menu_func_importPaths)
     bpy.types.TOPBAR_MT_file_export.remove(menu_func_exportPaths)
+    bpy.types.TOPBAR_MT_file_export.remove(menu_func_exportPassengerCabin)
 
 if __name__ == "__main__":
     register()
