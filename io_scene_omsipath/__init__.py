@@ -23,8 +23,8 @@ from bpy_extras.io_utils import ImportHelper, ExportHelper
 from . import paths, passengercabin
 
 bl_info = {
-    "name": "OMSI Pax Configuration File Exporter",
-    "description": "Import-Export passenger configuration files for OMSI.",
+    "name": "OMSI Configuration File Exporter",
+    "description": "Import-Export passenger configuration files for OMSI buses.",
     "author": "Fabian S., jem_suu",
     "version": (0, 1, 0),
     "blender": (2, 80, 0),
